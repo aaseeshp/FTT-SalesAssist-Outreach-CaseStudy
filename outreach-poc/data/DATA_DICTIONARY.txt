@@ -1,0 +1,230 @@
+DATA DICTIONARY
+
+This file describes every field in the accompanying JSON files.
+[] means one item in a list. A dot indicates a field inside a nested object.
+A leading [] refers to a record in a file whose top level is a list.
+Dates use YYYY-MM-DD unless a field description says otherwise.
+Amounts are illustrative USD values. Null means unknown.
+Missing records do not mean zero holdings, no sales or no CRM activity.
+
+00_context.json
+---------------
+REFERENCE_DATE
+  The reference date for this exercise, in YYYY-MM-DD format.
+
+USERS
+  List of internal SalesAssist users.
+
+USERS[].USER_ID
+  Unique identifier for an internal sales user.
+
+USERS[].DISPLAY_NAME
+  The internal user's display name.
+
+USERS[].REGION_IDENTIFIER
+  The single region assigned to this internal user.
+
+PRODUCT_CATALOG
+  List linking fund and share-class identifiers to product names.
+
+PRODUCT_CATALOG[].PRODUCT_SHARE_CLASS_ID
+  Identifier for a specific fund share class. Use it to distinguish classes of the same fund.
+
+PRODUCT_CATALOG[].PRODUCT_ID
+  Internal fund identifier shared by the fund's share classes.
+
+PRODUCT_CATALOG[].PRODUCT_NAME
+  The fund's full display name.
+
+PRODUCT_CATALOG[].SHARE_CLASS_LABEL
+  Share-class label, such as I or A.
+
+
+01_advisors.json
+----------------
+[].ADVISOR_ID
+  Unique identifier for an external Financial Advisor; links this advisor to other files.
+
+[].DISPLAY_NAME
+  The advisor's display name.
+
+[].ROLE_TITLE
+  The advisor's professional role or title.
+
+[].EMAIL_ID
+  The advisor's primary email address. 
+
+[].ADVISOR_PARENT_FIRM_NAME
+  Name of the larger organization associated with the advisor's firm.
+
+[].ADVISOR_FIRM_NAME
+  Name of the firm where the advisor currently works.
+
+[].RELANTIONSHIP_COMMENTS
+  Free-text relationship notes recorded in the advisor profile.
+
+[].REGION_IDENTIFIER
+  region to which the advisor is assigned.
+
+[].BIRTHDAY_MONTH_DAY
+  Birthday month and day in MM-DD format. No birth year is supplied; null means unknown.
+
+
+02_activities.json
+------------------
+[].ADVISOR_ID
+  Identifier of the advisor associated with this CRM activity.
+
+[].INTERACTION_ID
+  Unique identifier for the activity record.
+
+[].INTERACTION_DATE
+  Date on which the interaction occurred, in YYYY-MM-DD format.
+
+[].INTERACTION_CHANNEL
+  Kind of interaction, such as a meeting, call or email.
+
+[].COMMUNICATION_DIRECTION
+  Direction of communication: inbound from the advisor, outbound from the sales team, or two-way.
+
+[].MEANINGFUL_CONTACT_FLAG
+  Source-system flag indicating whether the interaction was marked value-added: Y or N. It is a recorded signal by the person who is logging the activity in the system, not proof of advisor interest.
+
+[].INTERACTION_SUBJECT
+  Short title or subject of the activity.
+
+[].INTERACTION_DETAILS
+  Free-text account of the discussion, requests or follow-up commitments.
+
+[].PRODUCT_NAMES
+  List of product names associated with the activity. An empty list means no product names are supplied for that record.
+
+[].REGION_IDENTIFIER
+  region associated with the activity.
+
+
+03_holdings.json
+----------------
+[].ADVISOR_ID
+  Identifier of the advisor associated with the holding.
+
+[].PRODUCT_NAME
+  Full display name of the held fund.
+
+[].PRODUCT_SHARE_CLASS_ID
+  Identifier of the specific fund share class held.
+
+[].INVESTMENT_VEHICLE
+  Product vehicle, such as a Open Ended Fund/ Closed Ended Fund / Separately managed Account (SMA) / ETF.
+
+[].ASSET_CATEGORY
+  Broad investment category, such as equity or fixed income or multi-asset or alternatives.
+
+[].CURRENT_HOLDING_VALUE
+  Reported value of this holding at REFERENCE_DATE, in illustrative USD amounts.
+
+[].PREVIOUS_HOLDING_VALUE
+  Reported value at the previous comparison point, in USD. The date of that comparison point is not supplied.
+
+[].HOLDING_VALUE_CHANGE
+  CURRENT_HOLDING_VALUE minus PREVIOUS_HOLDING_VALUE, in USD. Positive means an increase; negative means a decrease. This change alone does not establish a purchase or redemption.
+
+[].REFERENCE_DATE
+  Date of the current holdings snapshot, in YYYY-MM-DD format.
+
+
+04_recent_sales.json
+--------------------
+[].ADVISOR_ID
+  Identifier of the advisor whose recent business is summarized.
+
+[].MOST_RECENT_TRANSACTION_DATE
+  Latest reported sales or transaction date, in YYYY-MM-DD format.
+
+[].MOST_RECENT_TRANSACTION_AMOUNT
+  Reported total amount for the latest sales date, in illustrative USD amounts.
+
+[].PREVIOUS_TRANSACTION_DATE
+  Previous reported sales date, in YYYY-MM-DD format; not necessarily the previous calendar day.
+
+[].PREVIOUS_TRANSACTION_AMOUNT
+  Reported total amount for the previous sales date, in USD.
+
+[].RECENT_TRANSACTION_DIRECTION
+  Reported direction of the latest business, such as purchase or redemption.
+
+[].TRANSACTION_DIRECTION_CHANGED
+  Whether the latest reported direction differs from the previous reported direction: true means changed; false means unchanged.
+
+[].RECENT_DAILY_TRANSACTIONS
+  Object containing the latest reported day and its product breakdown.
+
+[].RECENT_DAILY_TRANSACTIONS.TRANSACTION_SUMMARY_DATE
+  Date covered by the nested daily summary, in YYYY-MM-DD format.
+
+[].RECENT_DAILY_TRANSACTIONS.PRODUCT_SHARE_CLASS_DETAILS
+  List of amounts reported for individual fund share classes on that day.
+
+[].RECENT_DAILY_TRANSACTIONS.PRODUCT_SHARE_CLASS_DETAILS[].PRODUCT_SHARE_CLASS_ID
+  Identifier of the fund share class in this breakdown item.
+
+[].RECENT_DAILY_TRANSACTIONS.PRODUCT_SHARE_CLASS_DETAILS[].PRODUCT_NAME
+  Full display name of the fund in this breakdown item.
+
+[].RECENT_DAILY_TRANSACTIONS.PRODUCT_SHARE_CLASS_DETAILS[].TRANSACTION_AMOUNT
+  Reported amount for this share class on the reporting date, in USD. Interpret it with RECENT_TRANSACTION_DIRECTION.
+
+
+05_fund_reference.json
+----------------------
+[].REFERENCE_PRODUCT_ID
+  Fund identifier used by the reference feed. It happens to match PRODUCT_ID in these files; do not assume the two identifiers are always interchangeable.
+
+[].PRODUCT_SHARE_CLASS_ID
+  Internal identifier for the specific fund share class described.
+
+[].PRODUCT_ID
+  Internal identifier for the underlying fund across share classes.
+
+[].PRODUCT_NAME
+  The fund's formal or legal name.
+
+[].PRODUCT_CATEGORY
+  Reference-feed investment category. The category labels here are fictional examples.
+
+[].OVERALL_RATING
+  Illustrative overall star rating on a 1-to-5 scale. 
+
+[].ONE_YEAR_RETURN_PERCENT
+  Illustrative return over the one-year period ending at REFERENCE_DATE, in percentage units. For example, 5.2 means 5.2 percent.
+
+[].REFERENCE_DATE
+  Date to which the reference information applies, in YYYY-MM-DD format.
+
+[].REFERENCE_NOTE
+  Explains the synthetic nature or source limitations of this record.
+
+
+06_documents.json
+-----------------
+[].CONTENT_ID
+  Unique identifier for the document metadata record.
+
+[].PRODUCT_SHARE_CLASS_ID
+  Identifier of the fund share class to which the document applies.
+
+[].CONTENT_TYPE
+  Type of material, such as a factsheet, product commentary, snapshot, prospectus or presentation.
+
+[].RELEASE_DATE
+  Date the document was published, in YYYY-MM-DD format.
+
+[].INTENDED_AUDIENCE
+  Intended audience: internal company use or external sharing.
+
+[].REVIEW_STATUS
+  Recorded approval state of the material, such as approved. Interpret it together with its audience and product identity.
+
+[].CONTENT_URL
+  Document location. All links use example.invalid and are intentionally not live.
+

@@ -1,0 +1,23 @@
+# Secrets - never commit
+.env
+**/.env
+!.env.example
+
+# Environments and dependencies
+**/.venv/
+deck/.pyvenv/
+**/node_modules/
+**/__pycache__/
+**/.pytest_cache/
+
+# Build output / scratch
+deck/render-*/
+outreach-poc.zip
+
+# Source material not ours to publish (case brief) and duplicates
+FT Problem Statement - AI Capability.pdf
+/Data/
+~$*
+
+# OS noise
+.DS_Store

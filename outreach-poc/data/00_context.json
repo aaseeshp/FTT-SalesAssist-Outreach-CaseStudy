@@ -1,0 +1,35 @@
+{
+  "REFERENCE_DATE": "2026-11-11",
+  "USERS": [
+    {
+      "USER_ID": "U101",
+      "DISPLAY_NAME": "Alex Chen",
+      "REGION_IDENTIFIER": "T1"
+    },
+    {
+      "USER_ID": "U102",
+      "DISPLAY_NAME": "Sam Lee",
+      "REGION_IDENTIFIER": "T2"
+    }
+  ],
+  "PRODUCT_CATALOG": [
+    {
+      "PRODUCT_SHARE_CLASS_ID": "P101I",
+      "PRODUCT_ID": "F101",
+      "PRODUCT_NAME": "Riverstone Income Fund",
+      "SHARE_CLASS_LABEL": "I"
+    },
+    {
+      "PRODUCT_SHARE_CLASS_ID": "P101A",
+      "PRODUCT_ID": "F101",
+      "PRODUCT_NAME": "Riverstone Income Fund",
+      "SHARE_CLASS_LABEL": "A"
+    },
+    {
+      "PRODUCT_SHARE_CLASS_ID": "P102A",
+      "PRODUCT_ID": "F102",
+      "PRODUCT_NAME": "Oakbridge Equity Fund",
+      "SHARE_CLASS_LABEL": "A"
+    }
+  ]
+}

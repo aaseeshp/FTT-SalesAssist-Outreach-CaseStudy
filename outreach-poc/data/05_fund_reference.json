@@ -1,0 +1,24 @@
+[
+  {
+    "REFERENCE_PRODUCT_ID": "F101",
+    "PRODUCT_SHARE_CLASS_ID": "P101I",
+    "PRODUCT_ID": "F101",
+    "PRODUCT_NAME": "Riverstone Income Fund",
+    "PRODUCT_CATEGORY": "Illustrative income category",
+    "OVERALL_RATING": 4,
+    "ONE_YEAR_RETURN_PERCENT": 5.2,
+    "REFERENCE_DATE": "2026-10-31",
+    "REFERENCE_NOTE": "Synthetic fields illustrating a licensed reference feed; not real market data."
+  },
+  {
+    "REFERENCE_PRODUCT_ID": "F102",
+    "PRODUCT_SHARE_CLASS_ID": "P102A",
+    "PRODUCT_ID": "F102",
+    "PRODUCT_NAME": "Oakbridge Equity Fund",
+    "PRODUCT_CATEGORY": "Illustrative equity category",
+    "OVERALL_RATING": 3,
+    "ONE_YEAR_RETURN_PERCENT": 7.1,
+    "REFERENCE_DATE": "2026-10-31",
+    "REFERENCE_NOTE": "Synthetic fields illustrating a licensed reference feed; not real market data."
+  }
+]

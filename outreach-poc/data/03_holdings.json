@@ -1,0 +1,24 @@
+[
+  {
+    "ADVISOR_ID": "A101",
+    "PRODUCT_NAME": "Riverstone Income Fund",
+    "PRODUCT_SHARE_CLASS_ID": "P101I",
+    "INVESTMENT_VEHICLE": "Mutual fund",
+    "ASSET_CATEGORY": "Fixed income",
+    "CURRENT_HOLDING_VALUE": 120000,
+    "PREVIOUS_HOLDING_VALUE": 95000,
+    "HOLDING_VALUE_CHANGE": 25000,
+    "REFERENCE_DATE": "2026-11-08"
+  },
+  {
+    "ADVISOR_ID": "A101",
+    "PRODUCT_NAME": "Oakbridge Equity Fund",
+    "PRODUCT_SHARE_CLASS_ID": "P102A",
+    "INVESTMENT_VEHICLE": "Mutual fund",
+    "ASSET_CATEGORY": "Equity",
+    "CURRENT_HOLDING_VALUE": 45000,
+    "PREVIOUS_HOLDING_VALUE": 50000,
+    "HOLDING_VALUE_CHANGE": -5000,
+    "REFERENCE_DATE": "2026-11-08"
+  }
+]

@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SalesAssist · Advisors</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+  <link rel="stylesheet" href="/static/styles.css?v=5">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand"><span class="logo" aria-hidden="true">SA</span><span>SalesAssist</span></div>
+    <nav class="nav" aria-label="Primary"><a class="active" href="#">Advisors</a></nav>
+    <div class="topbar-right">
+      <span class="mode" id="mode" title="Drafting engine">…</span>
+      <label class="user-switch">
+        <span class="sr-only">Signed in as</span>
+        <select id="userSelect" aria-label="Signed-in sales user"></select>
+      </label>
+    </div>
+  </header>
+
+  <main class="page">
+    <div class="page-head">
+      <div>
+        <p class="eyebrow">Reference date <span id="refDate">…</span></p>
+        <h1>My advisors <span class="region-chip" id="regionChip"></span></h1>
+        <p class="muted">Click the email icon next to an advisor to prepare outreach from their CRM history, recent business and approved material.</p>
+      </div>
+      <label class="toggle"><input type="checkbox" id="allRegions"> <span>Show other regions (demo of access control)</span></label>
+    </div>
+
+    <div class="table-card">
+      <table class="advisors">
+        <thead><tr><th>Advisor</th><th>Firm</th><th>Region</th><th>Last contact</th><th>Signals</th><th class="right">Outreach</th></tr></thead>
+        <tbody id="advisorRows"><tr><td colspan="6" class="muted">Loading advisors…</td></tr></tbody>
+      </table>
+    </div>
+
+    <section class="log-card" id="logCard" hidden>
+      <h2>Recent admin actions</h2>
+      <ul id="actionLog" class="action-log"></ul>
+    </section>
+  </main>
+
+  <!-- Composer dialog -->
+  <div class="overlay" id="composer" hidden>
+    <div class="dialog" role="dialog" aria-modal="true" aria-labelledby="dlgTitle">
+      <div class="dlg-head">
+        <div class="dlg-who">
+          <span class="avatar" id="dlgAvatar"></span>
+          <div>
+            <h2 id="dlgTitle">New outreach</h2>
+            <p class="muted small" id="dlgSub"></p>
+          </div>
+        </div>
+        <button class="icon-btn" id="closeComposer" aria-label="Close">✕</button>
+      </div>
+
+      <div class="progress" id="progress">
+        <h3>Preparing outreach…</h3>
+        <ol id="progressSteps"></ol>
+      </div>
+
+      <div class="blocked" id="blocked" hidden>
+        <div class="lock" aria-hidden="true">🔒</div>
+        <h3>Outside your region</h3>
+        <p id="blockedMsg"></p>
+      </div>
+
+      <div class="dlg-body" id="dlgBody" hidden>
+        <div class="compose">
+          <div class="tabs" id="intentTabs" role="tablist" aria-label="Suggested reasons to write"></div>
+          <div class="banners" id="banners"></div>
+
+          <div class="mail">
+            <div class="mail-row"><span class="lbl">From</span><span id="fromField"></span></div>
+            <div class="mail-row"><span class="lbl">To</span><span id="toField"></span></div>
+            <div class="mail-row"><label class="lbl" for="subject">Subject</label><input id="subject" type="text"></div>
+            <div class="body" id="bodyEditor" contenteditable="true" spellcheck="true" aria-label="Email body"></div>
+          </div>
+
+          <div class="links-card" id="linksCard">
+            <h4>Data links in this email</h4>
+            <div id="links" class="links"></div>
+          </div>
+
+          <div class="compose-bar">
+            <div class="verify" id="verifyBadge"></div>
+            <div class="bar-actions">
+              <label class="tone">Tone
+                <select id="toneSelect">
+                  <option value="concise">Concise</option>
+                  <option value="warm">Warm</option>
+                  <option value="formal">Formal</option>
+                </select>
+              </label>
+              <button class="btn ghost" id="regenBtn">Regenerate</button>
+              <button class="btn ghost" id="copyBtn">Copy email</button>
+              <a class="btn primary" id="mailtoBtn" href="#">Open in mail app</a>
+            </div>
+          </div>
+          <p class="muted small">SalesAssist never sends email. Review, edit and send it from your own mail client.</p>
+
+          <section class="admin">
+            <div class="admin-head">
+              <h3>Administrative actions</h3>
+              <button class="btn primary" id="runActions" disabled>Run selected actions</button>
+            </div>
+            <div id="actions" class="actions"></div>
+            <ul id="actionResults" class="action-results"></ul>
+          </section>
+        </div>
+
+        <aside class="summary" aria-label="Summary">
+          <div class="sum-block">
+            <h4>Why this email</h4>
+            <p id="whyText" class="why"></p>
+            <div id="signalChips" class="chips"></div>
+          </div>
+          <div class="sum-block">
+            <h4>Facts in this draft <span class="muted small">(untick to leave out)</span></h4>
+            <ul id="facts" class="facts"></ul>
+            <button class="btn small ghost" id="applyFacts" hidden>Apply &amp; regenerate</button>
+          </div>
+          <div class="sum-block">
+            <h4>Left out on purpose</h4>
+            <ul id="exclusions" class="excl"></ul>
+          </div>
+          <div class="sum-block">
+            <h4>Advisor snapshot <span class="muted small">(internal)</span></h4>
+            <div id="snapshot" class="snapshot"></div>
+          </div>
+          <details class="sum-block">
+            <summary><h4>How this was prepared</h4></summary>
+            <ol id="trace" class="trace"></ol>
+          </details>
+        </aside>
+      </div>
+    </div>
+  </div>
+
+  <!-- Confirmation dialog -->
+  <div class="overlay top" id="confirm" hidden>
+    <div class="dialog small" role="alertdialog" aria-modal="true" aria-labelledby="cfTitle">
+      <h3 id="cfTitle">Run these actions?</h3>
+      <p class="muted small" id="cfSub"></p>
+      <ul id="cfList" class="cf-list"></ul>
+      <div class="cf-bar">
+        <button class="btn ghost" id="cfCancel">Cancel</button>
+        <button class="btn primary" id="cfOk">Confirm and run</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+  <script src="/static/app.js?v=5"></script>
+</body>
+</html>

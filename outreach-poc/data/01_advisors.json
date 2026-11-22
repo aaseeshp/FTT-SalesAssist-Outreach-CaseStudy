@@ -1,0 +1,35 @@
+[
+  {
+    "ADVISOR_ID": "A101",
+    "DISPLAY_NAME": "Riley Morgan",
+    "ROLE_TITLE": "Financial Advisor",
+    "EMAIL_ID": "riley@example.invalid",
+    "ADVISOR_PARENT_FIRM_NAME": "Cedar Group",
+    "ADVISOR_FIRM_NAME": "Cedar Advisory",
+    "RELANTIONSHIP_COMMENTS": "Prefers concise product discussions.",
+    "REGION_IDENTIFIER": "T1",
+    "BIRTHDAY_MONTH_DAY": "08-14"
+  },
+  {
+    "ADVISOR_ID": "A102",
+    "DISPLAY_NAME": "Jordan Ellis",
+    "ROLE_TITLE": "Financial Advisor",
+    "EMAIL_ID": "jordan@example.invalid",
+    "ADVISOR_PARENT_FIRM_NAME": "Maple Group",
+    "ADVISOR_FIRM_NAME": "Maple Advisory",
+    "RELANTIONSHIP_COMMENTS": "Recently moved to Maple Advisory.",
+    "REGION_IDENTIFIER": "T1",
+    "BIRTHDAY_MONTH_DAY": "11-15"
+  },
+  {
+    "ADVISOR_ID": "A103",
+    "DISPLAY_NAME": "Casey Brooks",
+    "ROLE_TITLE": "Financial Advisor",
+    "EMAIL_ID": "casey@example.invalid",
+    "ADVISOR_PARENT_FIRM_NAME": "Willow Group",
+    "ADVISOR_FIRM_NAME": "Willow Financial",
+    "RELANTIONSHIP_COMMENTS": null,
+    "REGION_IDENTIFIER": "T2",
+    "BIRTHDAY_MONTH_DAY": null
+  }
+]

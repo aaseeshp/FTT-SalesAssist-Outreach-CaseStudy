@@ -1,0 +1,19 @@
+# Web app
+fastapi==0.165.0
+uvicorn[standard]==0.54.0
+pydantic==2.12.5
+
+# Multi-agent orchestration + SalesAssist MCP servers
+crewai==1.15.44
+crewai-tools[mcp]==1.15.44
+mcp==1.30.0
+
+# Model providers
+# NOTE: install anthropic AFTER crewai (see README) - crewai's optional extra pins an old SDK;
+# this project uses its own CrewAI adapter on the current SDK instead.
+anthropic==2.12.0
+google-genai==3.6.1
+
+# Tests
+pytest==9.2.0
+httpx==0.28.1

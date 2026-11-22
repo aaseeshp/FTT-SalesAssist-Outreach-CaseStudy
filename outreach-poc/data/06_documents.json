@@ -1,0 +1,38 @@
+[
+  {
+    "CONTENT_ID": "D101",
+    "PRODUCT_SHARE_CLASS_ID": "P101I",
+    "CONTENT_TYPE": "Factsheet",
+    "RELEASE_DATE": "2026-10-31",
+    "INTENDED_AUDIENCE": "external",
+    "REVIEW_STATUS": "approved",
+    "CONTENT_URL": "https://example.invalid/D101.pdf"
+  },
+  {
+    "CONTENT_ID": "D102",
+    "PRODUCT_SHARE_CLASS_ID": "P101I",
+    "CONTENT_TYPE": "Product commentary",
+    "RELEASE_DATE": "2026-10-31",
+    "INTENDED_AUDIENCE": "external",
+    "REVIEW_STATUS": "approved",
+    "CONTENT_URL": "https://example.invalid/D102.pdf"
+  },
+  {
+    "CONTENT_ID": "D103",
+    "PRODUCT_SHARE_CLASS_ID": "P101A",
+    "CONTENT_TYPE": "Factsheet",
+    "RELEASE_DATE": "2026-11-05",
+    "INTENDED_AUDIENCE": "external",
+    "REVIEW_STATUS": "approved",
+    "CONTENT_URL": "https://example.invalid/D103.pdf"
+  },
+  {
+    "CONTENT_ID": "D104",
+    "PRODUCT_SHARE_CLASS_ID": "P102A",
+    "CONTENT_TYPE": "Presentation",
+    "RELEASE_DATE": "2026-11-06",
+    "INTENDED_AUDIENCE": "internal",
+    "REVIEW_STATUS": "approved",
+    "CONTENT_URL": "https://example.invalid/D104.pdf"
+  }
+]

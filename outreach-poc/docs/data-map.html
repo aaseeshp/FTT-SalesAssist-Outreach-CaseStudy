@@ -1,0 +1,438 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SalesAssist Outreach Plan</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: single reading column (max 1100px) — map first, then rules, scenarios, pipeline, build plan */
+:root {
+  --bg: #f5f7fa; --surface: #ffffff; --sunk: #eef1f6;
+  --ink: #152033; --muted: #5a6579; --line: #d5dbe5;
+  --accent: #1d5fc4;          /* ADVISOR_ID joins, primary accent */
+  --region: #7446c0;          /* region scoping */
+  --share: #0d8670;           /* share-class joins */
+  --warn: #b26a00;            /* weak / name-only joins */
+  --bad: #b3261e; --good: #1d7a3a;
+  --f-display: "Space Grotesk", "Segoe UI", system-ui, sans-serif;
+  --f-body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #0e131a; --surface: #161d27; --sunk: #1c2430;
+  --ink: #e4e9f0; --muted: #98a3b4; --line: #2c3645;
+  --accent: #6ea3ff; --region: #b494f2; --share: #3fc6a4; --warn: #f0a640;
+  --bad: #ff7d73; --good: #62c983; color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --bg: #0e131a; --surface: #161d27; --sunk: #1c2430;
+  --ink: #e4e9f0; --muted: #98a3b4; --line: #2c3645;
+  --accent: #6ea3ff; --region: #b494f2; --share: #3fc6a4; --warn: #f0a640;
+  --bad: #ff7d73; --good: #62c983; color-scheme: dark; }
+
+body { background: var(--bg); color: var(--ink); font-family: var(--f-body); font-size: 15px; line-height: 1.55; }
+.wrap { max-width: 1100px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 40px 72px; display: grid; gap: 56px; }
+h1, h2, h3 { font-family: var(--f-display); text-wrap: balance; margin: 0; line-height: 1.2; }
+h1 { font-size: 2.1rem; font-weight: 700; letter-spacing: -0.01em; }
+h2 { font-size: 1.45rem; font-weight: 600; }
+h3 { font-size: 1.05rem; font-weight: 600; }
+p { margin: 0; max-width: 68ch; }
+code, .mono { font-family: var(--f-mono); font-size: 0.82em; }
+.eyebrow { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+section { display: grid; gap: 18px; min-width: 0; }
+.sec-head { display: grid; gap: 6px; }
+.lede { color: var(--muted); }
+
+header { display: grid; gap: 14px; }
+.meta { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { display: inline-flex; align-items: center; gap: 6px; padding: 3px 10px; border: 1px solid var(--line); border-radius: 999px; font-size: 0.8rem; color: var(--muted); background: var(--surface); }
+.chip b { color: var(--ink); font-weight: 600; }
+
+/* Map */
+.map-card { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; display: grid; gap: 0; min-width: 0; }
+.map-toolbar { display: flex; flex-wrap: wrap; gap: 14px 24px; align-items: center; justify-content: space-between; padding: 14px 16px; border-bottom: 1px solid var(--line); }
+.seg { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.seg .lbl { font-size: 0.78rem; color: var(--muted); margin-right: 4px; }
+.seg button { font: inherit; font-size: 0.8rem; padding: 4px 10px; border-radius: 6px; border: 1px solid var(--line); background: var(--bg); color: var(--ink); cursor: pointer; display: inline-flex; gap: 6px; align-items: center; }
+.seg button[aria-pressed="true"] { background: var(--ink); color: var(--surface); border-color: var(--ink); }
+.seg button:focus-visible, .row-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.swatch { width: 18px; height: 0; border-top: 2.5px solid currentColor; display: inline-block; }
+.swatch.dash { border-top-style: dashed; }
+.map-scroll { overflow-x: auto; padding: 8px 4px 4px; }
+.map-scroll svg { display: block; min-width: 900px; width: 100%; height: auto; }
+.map-note { padding: 12px 16px 16px; font-size: 0.85rem; color: var(--muted); border-top: 1px solid var(--line); }
+
+svg .box { fill: var(--surface); stroke: var(--line); stroke-width: 1.2; }
+svg .boxhead { fill: var(--sunk); }
+svg .ttl { font-family: var(--f-display); font-weight: 600; font-size: 13px; fill: var(--ink); }
+svg .file { font-family: var(--f-mono); font-size: 9.5px; fill: var(--muted); }
+svg .fld { font-family: var(--f-mono); font-size: 10.5px; fill: var(--ink); }
+svg .fld.dim { fill: var(--muted); }
+svg .edge { fill: none; stroke-width: 2; transition: opacity .15s; }
+svg .k-advisor { stroke: var(--accent); }
+svg .k-region { stroke: var(--region); }
+svg .k-share { stroke: var(--share); }
+svg .k-name, svg .k-pid { stroke: var(--warn); stroke-dasharray: 5 4; }
+svg .dot-advisor { fill: var(--accent); } svg .dot-region { fill: var(--region); }
+svg .dot-share { fill: var(--share); } svg .dot-name, svg .dot-pid { fill: var(--warn); }
+svg .badge-bg { fill: var(--ink); }
+svg .badge { font-family: var(--f-body); font-size: 11px; font-weight: 600; fill: var(--surface); }
+svg .badge-bg.bad { fill: var(--bad); }
+svg.focus .edge { opacity: .12; }
+svg.focus .edge.on { opacity: 1; stroke-width: 3; }
+@media (prefers-reduced-motion: reduce) { svg .edge { transition: none; } }
+
+/* Tables */
+.tbl-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
+table { border-collapse: collapse; width: 100%; font-size: 0.86rem; min-width: 760px; }
+th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); font-weight: 600; background: var(--sunk); }
+tr:last-child td { border-bottom: 0; }
+.kpill { display: inline-block; font-family: var(--f-mono); font-size: 0.75rem; padding: 1px 7px; border-radius: 4px; border: 1px solid currentColor; white-space: nowrap; }
+.kpill.advisor { color: var(--accent); } .kpill.region { color: var(--region); } .kpill.share { color: var(--share); } .kpill.name, .kpill.pid { color: var(--warn); }
+
+/* Rules grid */
+.rules { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 12px; }
+.rule { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; display: grid; gap: 6px; align-content: start; min-width: 0; }
+.rule .claim { font-weight: 600; }
+.rule .src { font-family: var(--f-mono); font-size: 0.75rem; color: var(--muted); }
+.rule p { font-size: 0.88rem; color: var(--muted); }
+
+/* Scenario cards */
+.scen { display: grid; grid-template-columns: repeat(auto-fit, minmax(310px, 1fr)); gap: 14px; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; display: grid; grid-template-rows: auto 1fr; min-width: 0; }
+.card-h { padding: 14px 16px; border-bottom: 1px solid var(--line); display: grid; gap: 4px; }
+.card-h .who { display: flex; justify-content: space-between; gap: 8px; align-items: baseline; flex-wrap: wrap; }
+.card-h .sub { font-size: 0.8rem; color: var(--muted); }
+.card-b { padding: 14px 16px; display: grid; gap: 12px; align-content: start; }
+.intent { font-size: 0.92rem; }
+.intent .eyebrow { display: block; margin-bottom: 2px; }
+.list { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; font-size: 0.85rem; }
+.list li { display: grid; grid-template-columns: 62px 1fr; gap: 8px; align-items: start; }
+.tag { font-size: 0.68rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; padding: 2px 0; border-radius: 4px; text-align: center; border: 1px solid currentColor; }
+.tag.use { color: var(--good); } .tag.opt { color: var(--warn); } .tag.drop { color: var(--bad); } .tag.act { color: var(--accent); }
+.scope { font-size: 0.72rem; font-weight: 600; padding: 2px 8px; border-radius: 999px; border: 1px solid var(--region); color: var(--region); white-space: nowrap; }
+
+/* Pipeline */
+.pipe { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; counter-reset: step; }
+.pipe li { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; display: grid; gap: 6px; align-content: start; counter-increment: step; min-width: 0; }
+.pipe li::before { content: "Step " counter(step); font-size: 0.7rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); }
+.pipe li p { font-size: 0.86rem; color: var(--muted); }
+.pipe li .who { font-family: var(--f-mono); font-size: 0.72rem; color: var(--muted); }
+.callout { border-left: 3px solid var(--accent); padding: 10px 14px; background: var(--surface); border-radius: 0 8px 8px 0; font-size: 0.9rem; max-width: 80ch; }
+
+/* Phases */
+.phases { display: grid; gap: 0; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
+.phase { display: grid; grid-template-columns: 90px minmax(0, 1fr) minmax(0, 1fr); gap: 16px; padding: 14px 16px; border-bottom: 1px solid var(--line); }
+.phase:last-child { border-bottom: 0; }
+.phase .pid { font-family: var(--f-display); font-weight: 700; color: var(--accent); }
+.phase ul { margin: 0; padding-left: 18px; font-size: 0.86rem; color: var(--muted); display: grid; gap: 2px; }
+.phase .out { font-size: 0.84rem; }
+.phase .out b { display: block; font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+@media (max-width: 720px) { .phase { grid-template-columns: 1fr; gap: 6px; } h1 { font-size: 1.7rem; } }
+
+.qs { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px; }
+.q { background: var(--surface); border: 1px dashed var(--line); border-radius: 10px; padding: 14px 16px; display: grid; gap: 6px; align-content: start; }
+.q p { font-size: 0.86rem; color: var(--muted); }
+.q .rec { font-size: 0.86rem; }
+</style>
+</head><body>
+
+<div class="wrap">
+
+<header>
+  <span class="eyebrow">Franklin Templeton · SalesAssist case study · working plan</span>
+  <h1>One click on the email icon, one grounded draft</h1>
+  <p class="lede">When a sales user clicks the email icon next to an advisor, SalesAssist pulls six data sources together and works out why this advisor needs contact now. It then drafts an email that uses only facts the data supports and lists the admin tasks the advisor's requests create. The user edits the draft and sends it themselves.</p>
+  <div class="meta">
+    <span class="chip">Reference date <b>2026-11-11</b></span>
+    <span class="chip">Users <b>2</b> (regions T1, T2)</span>
+    <span class="chip">Advisors <b>3</b></span>
+    <span class="chip">Source files <b>7</b></span>
+    <span class="chip">Sending email <b>out of scope</b></span>
+  </div>
+</header>
+
+<section id="map">
+  <div class="sec-head">
+    <span class="eyebrow">1 · Data map</span>
+    <h2>How the seven files connect</h2>
+    <p class="lede">Two keys carry most of the joins. <code>ADVISOR_ID</code> links the advisor to their activity and business, and <code>PRODUCT_SHARE_CLASS_ID</code> links products to fund data and documents. Region scopes everything to the signed-in user. The amber dashed joins are weak, and the system has to treat them carefully.</p>
+  </div>
+  <div class="map-card">
+    <div class="map-toolbar">
+      <div class="seg" id="kindSeg" role="group" aria-label="Highlight join type">
+        <span class="lbl">Highlight</span>
+        <button type="button" data-kind="all" aria-pressed="true">All joins</button>
+        <button type="button" data-kind="advisor" aria-pressed="false" style="color:var(--accent)"><span class="swatch"></span><span style="color:var(--ink)">Advisor</span></button>
+        <button type="button" data-kind="region" aria-pressed="false" style="color:var(--region)"><span class="swatch"></span><span style="color:var(--ink)">Region</span></button>
+        <button type="button" data-kind="share" aria-pressed="false" style="color:var(--share)"><span class="swatch"></span><span style="color:var(--ink)">Share class</span></button>
+        <button type="button" data-kind="weak" aria-pressed="false" style="color:var(--warn)"><span class="swatch dash"></span><span style="color:var(--ink)">Weak</span></button>
+      </div>
+      <div class="seg" id="advSeg" role="group" aria-label="Show records for advisor">
+        <span class="lbl">Records for</span>
+        <button type="button" data-adv="none" aria-pressed="true">Schema only</button>
+        <button type="button" data-adv="A101" aria-pressed="false">Riley · A101</button>
+        <button type="button" data-adv="A102" aria-pressed="false">Jordan · A102</button>
+        <button type="button" data-adv="A103" aria-pressed="false">Casey · A103</button>
+      </div>
+    </div>
+    <div class="map-scroll">
+      <svg id="dm" viewBox="0 0 1300 610" role="img" aria-label="Entity relationship map of the seven SalesAssist data files and their join keys"></svg>
+    </div>
+    <div class="map-note">Dots mark join fields. Choose an advisor to see what each source holds for them: dark badges show records found, red badges show material that exists but must not be used.</div>
+  </div>
+</section>
+
+<section id="joins">
+  <div class="sec-head">
+    <span class="eyebrow">2 · Connections</span>
+    <h2>Each join, and what it can and cannot prove</h2>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>From → To</th><th>Key</th><th>Shape</th><th>What it supports</th><th>Caveat the system must respect</th></tr></thead>
+      <tbody>
+        <tr><td>Sales user → Advisors, Activities</td><td><span class="kpill region">REGION_IDENTIFIER</span></td><td>1 region : many</td><td>Which advisors this user may see and email.</td><td>Hard entitlement filter. Alex Chen (T1) must not get a draft for Casey Brooks (T2).</td></tr>
+        <tr><td>Advisor → CRM activities</td><td><span class="kpill advisor">ADVISOR_ID</span></td><td>1 : many</td><td>Requests, promises, meetings, firm moves.</td><td>Outbound with no reply, or <code>MEANINGFUL_CONTACT_FLAG</code> alone, is not evidence of interest.</td></tr>
+        <tr><td>Advisor → Holdings</td><td><span class="kpill advisor">ADVISOR_ID</span></td><td>1 : many</td><td>Dated snapshot of the advisor's book (as of 2026-11-08).</td><td>A value change is not a trade. No record means unknown, not zero.</td></tr>
+        <tr><td>Advisor → Recent sales</td><td><span class="kpill advisor">ADVISOR_ID</span></td><td>1 : 0..1</td><td>Timely reason to thank: date, amount, direction.</td><td>A trade does not prove a current holding.</td></tr>
+        <tr><td>Holdings → Product catalog</td><td><span class="kpill share">PRODUCT_SHARE_CLASS_ID</span></td><td>many : 1</td><td>Exact share class held.</td><td>None. This is a clean key.</td></tr>
+        <tr><td>Sales daily detail → Product catalog</td><td><span class="kpill share">PRODUCT_SHARE_CLASS_ID</span></td><td>many : 1</td><td>Which share class was traded.</td><td>Covers only the latest reporting day.</td></tr>
+        <tr><td>Fund reference → Product catalog</td><td><span class="kpill share">PRODUCT_SHARE_CLASS_ID</span></td><td>1 : 1</td><td>Rating and 1-year return, dated 2026-10-31.</td><td>Licensed and dated. Quote with an "as of" date and disclosure, or leave it out.</td></tr>
+        <tr><td>Documents → Product catalog</td><td><span class="kpill share">PRODUCT_SHARE_CLASS_ID</span></td><td>many : 1</td><td>Material to attach.</td><td>Usable only if <code>external</code>, <code>approved</code>, and the exact share class the advisor discussed.</td></tr>
+        <tr><td>CRM activities → Product catalog</td><td><span class="kpill name">PRODUCT_NAMES</span></td><td>name text</td><td>Which fund was discussed.</td><td>Fund name only. "Riverstone" maps to classes I and A, so the class has to be read from the free text ("Class I") or left unresolved.</td></tr>
+        <tr><td>Fund reference → Product catalog</td><td><span class="kpill pid">PRODUCT_ID</span></td><td>many : 1</td><td>Fund-level grouping across classes.</td><td><code>REFERENCE_PRODUCT_ID</code> matches here by chance. Do not join on it.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section id="rules">
+  <div class="sec-head">
+    <span class="eyebrow">3 · Evidence rules</span>
+    <h2>Traps planted in the sample data</h2>
+    <p class="lede">The brief says to "take account of what a source actually supports". Each item below is a concrete case in the files. The POC should enforce each one in code and cover it with a test.</p>
+  </div>
+  <div class="rules">
+    <div class="rule"><span class="claim">The newest Riverstone factsheet is the wrong one</span><span class="src">06 · D103 → P101A</span><p>D103 (released 11-05) is for Class A. Riley asked about Class I, so attach D101 and D102 instead.</p></div>
+    <div class="rule"><span class="claim">Casey's requested factsheet does not exist yet</span><span class="src">06 · D104 internal</span><p>The only Oakbridge document is an internal presentation. Block it, tell the user, and raise an admin task to source an approved factsheet.</p></div>
+    <div class="rule"><span class="claim">The webinar invite is not interest</span><span class="src">02 · ACT104 outbound, flag N</span><p>Jordan never replied. Do not write "following up on your interest in…".</p></div>
+    <div class="rule"><span class="claim">A falling holding is not a redemption</span><span class="src">03 · Oakbridge −5,000</span><p>The sales file shows no redemption. The drop may be market movement, so leave it out of the email.</p></div>
+    <div class="rule"><span class="claim">Missing records mean unknown</span><span class="src">03, 04 · A102, A103</span><p>Neither advisor has holdings or sales rows. Never write "you don't hold any of our funds".</p></div>
+    <div class="rule"><span class="claim">Region is a hard boundary</span><span class="src">00 · U101=T1, 01 · A103=T2</span><p>Only Sam Lee can draft for Casey. For any other user the system returns nothing and calls no model.</p></div>
+    <div class="rule"><span class="claim">Fund data is licensed and dated</span><span class="src">05 · as of 2026-10-31</span><p>Include the rating or return only when it adds substance, always with its date and disclosure text.</p></div>
+    <div class="rule"><span class="claim">Tone comes from the relationship</span><span class="src">01 comments + 02 · ACT102</span><p>Riley prefers concise emails, so the draft is short with links rather than a long product pitch.</p></div>
+    <div class="rule"><span class="claim">Birthdays are timing signals</span><span class="src">01 · Jordan 11-15, Riley 08-14</span><p>Jordan's is 4 days away and is offered as a separate note. Riley's has passed and is ignored.</p></div>
+  </div>
+</section>
+
+<section id="scenarios">
+  <div class="sec-head">
+    <span class="eyebrow">4 · Signals → outreach</span>
+    <h2>What the system should produce for each advisor</h2>
+    <p class="lede">For each advisor: the main reason to write, which facts go in, which are dropped and why, and the admin tasks the conversation creates. These are the expected results the POC is tested against.</p>
+  </div>
+  <div class="scen">
+    <article class="card">
+      <div class="card-h">
+        <div class="who"><h3>Riley Morgan</h3><span class="scope">T1 · Alex Chen</span></div>
+        <span class="sub">Cedar Advisory · prefers concise emails</span>
+      </div>
+      <div class="card-b">
+        <div class="intent"><span class="eyebrow">Primary intent</span>Send the Class I information promised on the 11-06 call, and thank Riley for the $25,000 Riverstone purchase on 11-05.</div>
+        <ul class="list">
+          <li><span class="tag use">Use</span><span>ACT101 request + ACT102 promise (open commitment)</span></li>
+          <li><span class="tag use">Use</span><span>Sale 2026-11-05 · $25,000 purchase · P101I</span></li>
+          <li><span class="tag use">Use</span><span>D101 factsheet, D102 commentary (P101I, external, approved)</span></li>
+          <li><span class="tag opt">Option</span><span>4★, 5.2% 1-yr as of 10-31, with disclosure</span></li>
+          <li><span class="tag drop">Drop</span><span>D103 is Class A, not the class discussed</span></li>
+          <li><span class="tag drop">Drop</span><span>Oakbridge −$5,000 is not a confirmed redemption</span></li>
+          <li><span class="tag act">Task</span><span>Log the sent email to CRM and close the ACT102 promise</span></li>
+        </ul>
+      </div>
+    </article>
+    <article class="card">
+      <div class="card-h">
+        <div class="who"><h3>Jordan Ellis</h3><span class="scope">T1 · Alex Chen</span></div>
+        <span class="sub">Recently moved to Maple Advisory</span>
+      </div>
+      <div class="card-b">
+        <div class="intent"><span class="eyebrow">Primary intent</span>Congratulate Jordan on joining Maple Advisory and propose times to reconnect later this month, as Jordan asked.</div>
+        <ul class="list">
+          <li><span class="tag use">Use</span><span>ACT103 · 11-09 call · confirmed move, asked to reconnect</span></li>
+          <li><span class="tag use">Use</span><span>New firm name from profile</span></li>
+          <li><span class="tag opt">Option</span><span>Birthday 11-15 as a separate short note</span></li>
+          <li><span class="tag drop">Drop</span><span>Webinar invite: outbound, no response</span></li>
+          <li><span class="tag drop">Drop</span><span>Holdings and sales are unknown, so make no product claims</span></li>
+          <li><span class="tag act">Task</span><span>Scheduling agent proposes 3 slots between 11-17 and 11-30</span></li>
+          <li><span class="tag act">Task</span><span>Update the advisor's firm in CRM if it is still stale</span></li>
+        </ul>
+      </div>
+    </article>
+    <article class="card">
+      <div class="card-h">
+        <div class="who"><h3>Casey Brooks</h3><span class="scope">T2 · Sam Lee only</span></div>
+        <span class="sub">Willow Financial · no relationship notes</span>
+      </div>
+      <div class="card-b">
+        <div class="intent"><span class="eyebrow">Primary intent</span>Acknowledge the Oakbridge factsheet request and say when it will follow. The user sees a warning that no approved external factsheet exists yet.</div>
+        <ul class="list">
+          <li><span class="tag use">Use</span><span>ACT105 · 11-07 call · requested Oakbridge factsheet</span></li>
+          <li><span class="tag drop">Block</span><span>D104 is marked internal, so it cannot go to an advisor</span></li>
+          <li><span class="tag opt">Hold</span><span>3★, 7.1% 1-yr: needs compliance review without approved material</span></li>
+          <li><span class="tag drop">Drop</span><span>Holdings and sales are unknown</span></li>
+          <li><span class="tag act">Task</span><span>Request an approved Oakbridge P102A factsheet from marketing</span></li>
+          <li><span class="tag act">Task</span><span>Set a follow-up reminder for when the factsheet is published</span></li>
+        </ul>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section id="pipeline">
+  <div class="sec-head">
+    <span class="eyebrow">5 · Proposed design</span>
+    <h2>What happens after the click</h2>
+    <p class="lede">Rules decide what is true and allowed. The language model only writes. That split keeps every claim traceable and lets the capability grow by adding new detectors.</p>
+  </div>
+  <ol class="pipe">
+    <li><h3>Check entitlement</h3><p>The user's region must equal the advisor's region. If not, stop before any data is fetched or any model is called.</p><span class="who">Rules · Access guard</span></li>
+    <li><h3>Assemble context</h3><p>Fetch all six sources by <code>ADVISOR_ID</code> in parallel and resolve products to share classes through the catalog.</p><span class="who">Rules · Source adapters</span></li>
+    <li><h3>Detect signals</h3><p>Pluggable detectors each emit a typed signal with evidence IDs, date, strength and caveats. Examples: open request, significant trade, firm move, upcoming birthday, new approved material.</p><span class="who">Rules · Signal engine</span></li>
+    <li><h3>Rank intents</h3><p>Score by type: an open commitment beats a timely trade, which beats a relationship touch. Weight by recency and size. Return one primary intent and up to two alternates.</p><span class="who">Rules · Intent ranker</span></li>
+    <li><h3>Build the fact pack</h3><p>Apply the evidence rules: attachable documents, dated fund data, banned inferences. Output only allowed facts, each with an ID.</p><span class="who">Rules · Evidence guard</span></li>
+    <li><h3>Draft</h3><p>The model receives the intent, fact pack and tone hints. It returns subject, body and the fact IDs each sentence relies on.</p><span class="who">LLM · Drafting agent</span></li>
+    <li><h3>Verify</h3><p>Every number, date, fund name and link in the draft must match the fact pack. Anything else is removed or the draft is regenerated.</p><span class="who">Rules · Claim checker</span></li>
+    <li><h3>Review in SalesAssist</h3><p>A side panel opens with tabs for each intent, "why this email" evidence chips, toggles to add or drop facts, a tone control, admin tasks and Copy. The user sends the email themselves.</p><span class="who">UI · Outreach panel</span></li>
+  </ol>
+  <div class="callout"><b>Making it instant.</b> The brief says content must be available as soon as the user clicks. Steps 2–7 run ahead of time, overnight and whenever a source changes, and the results are cached per advisor. The click only runs the entitlement check and reads the cache, then refreshes in the background if the data is stale. If the model is unavailable, a template drafter fills the same fact pack, so the panel still opens.</div>
+</section>
+
+<section id="build">
+  <div class="sec-head">
+    <span class="eyebrow">6 · Build plan</span>
+    <h2>POC phases and deliverables</h2>
+  </div>
+  <div class="phases">
+    <div class="phase"><span class="pid">Phase 0</span><ul><li>Project scaffold, typed models for all 7 files</li><li>JSON adapters behind a source interface (swappable for CRM/APIs)</li><li>Join layer with share-class resolution, including from free text</li></ul><div class="out"><b>Output</b>Context assembler with tests for every join in section 2</div></div>
+    <div class="phase"><span class="pid">Phase 1</span><ul><li>Signal detectors as plugins</li><li>Intent ranker with explainable scores</li><li>Evidence guard enforcing the 9 rules in section 3</li></ul><div class="out"><b>Output</b>Fact pack JSON per advisor that matches section 4 exactly (golden tests)</div></div>
+    <div class="phase"><span class="pid">Phase 2</span><ul><li>Drafting agent with a structured output schema and fact citations</li><li>Claim checker</li><li>Offline template mode, so the POC runs without an API key</li></ul><div class="out"><b>Output</b>Drafts for Riley, Jordan and Casey with traceable claims</div></div>
+    <div class="phase"><span class="pid">Phase 3</span><ul><li>Mock SalesAssist advisor list with user switcher (Alex / Sam)</li><li>Email icon opens the outreach panel</li><li>Evidence chips, fact toggles, tone, admin tasks, copy</li></ul><div class="out"><b>Output</b>Clickable demo of the full flow, including the region block</div></div>
+    <div class="phase"><span class="pid">Phase 4</span><ul><li>README with setup steps</li><li>ARCHITECTURE, DECISIONS, ASSUMPTIONS and LIMITATIONS docs</li><li>Architecture diagram</li></ul><div class="out"><b>Output</b>Reviewable ZIP</div></div>
+    <div class="phase"><span class="pid">Phase 5</span><ul><li>Short deck for a non-technical sales audience: problem, value, demo, roadmap</li><li>Export of this conversation</li></ul><div class="out"><b>Output</b>Final submission bundle</div></div>
+  </div>
+</section>
+
+<section id="decisions">
+  <div class="sec-head">
+    <span class="eyebrow">7 · Decisions to confirm</span>
+    <h2>Before Phase 0 starts</h2>
+  </div>
+  <div class="qs">
+    <div class="q"><h3>Stack</h3><p>Python FastAPI backend with a light React or HTML front end, or a single Next.js app.</p><span class="rec"><b>Recommend:</b> Python + FastAPI. The rule engine and tests are easy for a reviewer to read.</span></div>
+    <div class="q"><h3>Model provider</h3><p>The brief welcomes Azure. A provider interface lets the deck show Azure as the target deployment.</p><span class="rec"><b>Recommend:</b> Claude via a provider interface, with the template fallback as the default demo mode.</span></div>
+    <div class="q"><h3>Intents in v1</h3><p>The brief asks which needs to support first.</p><span class="rec"><b>Recommend:</b> Fulfil request, Thank for trade and Firm move in v1. Meeting follow-up and birthday become alternates.</span></div>
+  </div>
+</section>
+
+</div>
+
+<script>
+(function () {
+  const W = 240, HH = 38, RH = 20;
+  const T = {
+    users:  { x: 40,   y: 60,  title: "Sales users",     file: "00_context.json · USERS",
+              f: [["USER_ID"], ["DISPLAY_NAME"], ["REGION_IDENTIFIER", "region"]] },
+    adv:    { x: 40,   y: 270, title: "Advisors",        file: "01_advisors.json",
+              f: [["ADVISOR_ID", "advisor"], ["DISPLAY_NAME"], ["ADVISOR_FIRM_NAME"], ["RELANTIONSHIP_COMMENTS"], ["BIRTHDAY_MONTH_DAY"], ["REGION_IDENTIFIER", "region"]] },
+    act:    { x: 370,  y: 20,  title: "CRM activities",  file: "02_activities.json",
+              f: [["ADVISOR_ID", "advisor"], ["INTERACTION_DATE"], ["INTERACTION_CHANNEL"], ["COMMUNICATION_DIRECTION"], ["MEANINGFUL_CONTACT_FLAG"], ["INTERACTION_DETAILS"], ["PRODUCT_NAMES", "name"], ["REGION_IDENTIFIER", "region"]] },
+    hold:   { x: 370,  y: 262, title: "Holdings",        file: "03_holdings.json",
+              f: [["ADVISOR_ID", "advisor"], ["PRODUCT_SHARE_CLASS_ID", "share"], ["CURRENT_HOLDING_VALUE"], ["HOLDING_VALUE_CHANGE"], ["REFERENCE_DATE"]] },
+    sales:  { x: 370,  y: 436, title: "Recent sales",    file: "04_recent_sales.json",
+              f: [["ADVISOR_ID", "advisor"], ["MOST_RECENT_TRANSACTION_DATE"], ["MOST_RECENT_TRANSACTION_AMOUNT"], ["RECENT_TRANSACTION_DIRECTION"], ["DETAILS[].PRODUCT_SHARE_CLASS_ID", "share"]] },
+    cat:    { x: 700,  y: 250, title: "Product catalog", file: "00_context.json · PRODUCT_CATALOG",
+              f: [["PRODUCT_SHARE_CLASS_ID", "share"], ["PRODUCT_ID", "pid"], ["PRODUCT_NAME", "name"], ["SHARE_CLASS_LABEL"]] },
+    fund:   { x: 1020, y: 40,  title: "Fund reference",  file: "05_fund_reference.json",
+              f: [["PRODUCT_SHARE_CLASS_ID", "share"], ["PRODUCT_ID", "pid"], ["REFERENCE_PRODUCT_ID"], ["OVERALL_RATING"], ["ONE_YEAR_RETURN_PERCENT"], ["REFERENCE_DATE"]] },
+    docs:   { x: 1020, y: 340, title: "Product documents", file: "06_documents.json",
+              f: [["PRODUCT_SHARE_CLASS_ID", "share"], ["CONTENT_TYPE"], ["RELEASE_DATE"], ["INTENDED_AUDIENCE"], ["REVIEW_STATUS"]] }
+  };
+  const cy = (t, name) => { const i = T[t].f.findIndex(r => r[0] === name); return T[t].y + HH + 10 + RH * i; };
+  const px = (t, side) => side === "R" ? T[t].x + W : T[t].x;
+
+  const E = [
+    ["users", "REGION_IDENTIFIER", "L", "adv", "REGION_IDENTIFIER", "L", "region"],
+    ["users", "REGION_IDENTIFIER", "R", "act", "REGION_IDENTIFIER", "L", "region"],
+    ["adv", "ADVISOR_ID", "R", "act", "ADVISOR_ID", "L", "advisor"],
+    ["adv", "ADVISOR_ID", "R", "hold", "ADVISOR_ID", "L", "advisor"],
+    ["adv", "ADVISOR_ID", "R", "sales", "ADVISOR_ID", "L", "advisor"],
+    ["hold", "PRODUCT_SHARE_CLASS_ID", "R", "cat", "PRODUCT_SHARE_CLASS_ID", "L", "share"],
+    ["sales", "DETAILS[].PRODUCT_SHARE_CLASS_ID", "R", "cat", "PRODUCT_SHARE_CLASS_ID", "L", "share"],
+    ["fund", "PRODUCT_SHARE_CLASS_ID", "L", "cat", "PRODUCT_SHARE_CLASS_ID", "R", "share"],
+    ["docs", "PRODUCT_SHARE_CLASS_ID", "L", "cat", "PRODUCT_SHARE_CLASS_ID", "R", "share"],
+    ["act", "PRODUCT_NAMES", "R", "cat", "PRODUCT_NAME", "L", "name"],
+    ["fund", "PRODUCT_ID", "L", "cat", "PRODUCT_ID", "R", "pid"]
+  ];
+
+  const BADGES = {
+    A101: { users: ["Alex Chen · T1 ✓"], adv: ["1 profile · concise"], act: ["2 · request + promise"], hold: ["2 rows · as of 11-08"], sales: ["$25k purchase · 11-05"], cat: ["P101I · P102A"], fund: ["2 rows · as of 10-31"], docs: ["2 usable", "2 blocked"] },
+    A102: { users: ["Alex Chen · T1 ✓"], adv: ["1 profile · new firm"], act: ["2 · 1 meaningful"], hold: ["none · unknown"], sales: ["none · unknown"], cat: ["no product link"], fund: ["not needed"], docs: ["not needed"] },
+    A103: { users: ["Sam Lee · T2 ✓", "Alex · blocked"], adv: ["1 profile"], act: ["1 · factsheet request"], hold: ["none · unknown"], sales: ["none · unknown"], cat: ["P102A by name"], fund: ["1 row · hold"], docs: ["0 usable", "1 blocked"] }
+  };
+
+  const NS = "http://www.w3.org/2000/svg";
+  const svg = document.getElementById("dm");
+  const el = (tag, attrs, parent, text) => { const n = document.createElementNS(NS, tag); for (const k in attrs) n.setAttribute(k, attrs[k]); if (text != null) n.textContent = text; (parent || svg).appendChild(n); return n; };
+
+  const gE = el("g", {}), gB = el("g", {}), gBadge = el("g", {});
+
+  E.forEach(([t1, f1, s1, t2, f2, s2, kind]) => {
+    const x1 = px(t1, s1), y1 = cy(t1, f1), x2 = px(t2, s2), y2 = cy(t2, f2);
+    let d;
+    if (s1 === s2) { const o = s1 === "L" ? -32 : 32; d = `M${x1},${y1} C${x1 + o},${y1} ${x2 + o},${y2} ${x2},${y2}`; }
+    else { const o1 = s1 === "R" ? 45 : -45, o2 = s2 === "R" ? 45 : -45; d = `M${x1},${y1} C${x1 + o1},${y1} ${x2 + o2},${y2} ${x2},${y2}`; }
+    const p = el("path", { d, class: `edge k-${kind}`, "data-kind": (kind === "name" || kind === "pid") ? "weak" : kind }, gE);
+    el("title", {}, p, `${f1} → ${f2}`);
+  });
+
+  for (const id in T) {
+    const t = T[id], h = HH + RH * t.f.length + 10;
+    el("rect", { x: t.x, y: t.y, width: W, height: h, rx: 8, class: "box" }, gB);
+    el("path", { d: `M${t.x + 8},${t.y} h${W - 16} a8,8 0 0 1 8,8 v${HH - 8} h${-W} v${-(HH - 8)} a8,8 0 0 1 8,-8 z`, class: "boxhead" }, gB);
+    el("text", { x: t.x + 12, y: t.y + 17, class: "ttl" }, gB, t.title);
+    el("text", { x: t.x + 12, y: t.y + 30, class: "file" }, gB, t.file);
+    t.f.forEach(([name, kind], i) => {
+      const y = t.y + HH + 10 + RH * i;
+      el("text", { x: t.x + 14, y: y + 4, class: "fld" + (kind ? "" : " dim") }, gB, name);
+      if (kind) { el("circle", { cx: t.x, cy: y, r: 3.5, class: "dot-" + kind }, gB); el("circle", { cx: t.x + W, cy: y, r: 3.5, class: "dot-" + kind }, gB); }
+    });
+    t.h = h;
+  }
+
+  function drawBadges(adv) {
+    while (gBadge.firstChild) gBadge.removeChild(gBadge.firstChild);
+    if (!BADGES[adv]) return;
+    for (const id in BADGES[adv]) {
+      const t = T[id]; let x = t.x;
+      BADGES[adv][id].forEach(txt => {
+        const bad = /blocked|hold/.test(txt);
+        const w = Math.round(txt.length * 6.3) + 16;
+        el("rect", { x, y: t.y + t.h + 6, width: w, height: 18, rx: 9, class: "badge-bg" + (bad ? " bad" : "") }, gBadge);
+        el("text", { x: x + 8, y: t.y + t.h + 19, class: "badge" }, gBadge, txt);
+        x += w + 6;
+      });
+    }
+  }
+
+  function press(groupId, btn) { document.querySelectorAll(`#${groupId} button`).forEach(b => b.setAttribute("aria-pressed", String(b === btn))); }
+  document.querySelectorAll("#kindSeg button").forEach(b => b.addEventListener("click", () => {
+    press("kindSeg", b); const k = b.dataset.kind;
+    svg.classList.toggle("focus", k !== "all");
+    gE.querySelectorAll(".edge").forEach(p => p.classList.toggle("on", p.dataset.kind === k));
+  }));
+  document.querySelectorAll("#advSeg button").forEach(b => b.addEventListener("click", () => { press("advSeg", b); drawBadges(b.dataset.adv); }));
+})();
+</script>
+
+</body></html>

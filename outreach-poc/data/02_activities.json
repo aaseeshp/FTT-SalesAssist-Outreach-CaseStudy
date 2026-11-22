@@ -1,0 +1,68 @@
+[
+  {
+    "ADVISOR_ID": "A101",
+    "INTERACTION_ID": "ACT101",
+    "INTERACTION_DATE": "2026-10-22",
+    "INTERACTION_CHANNEL": "Meeting",
+    "COMMUNICATION_DIRECTION": "Two-way",
+    "MEANINGFUL_CONTACT_FLAG": "Y",
+    "INTERACTION_SUBJECT": "Income strategy discussion",
+    "INTERACTION_DETAILS": "Riley requested more information on Riverstone Income Fund Class I and asked for a short overview of its investment approach.",
+    "PRODUCT_NAMES": [
+      "Riverstone Income Fund"
+    ],
+    "REGION_IDENTIFIER": "T1"
+  },
+  {
+    "ADVISOR_ID": "A101",
+    "INTERACTION_ID": "ACT102",
+    "INTERACTION_DATE": "2026-11-06",
+    "INTERACTION_CHANNEL": "Call",
+    "COMMUNICATION_DIRECTION": "Two-way",
+    "MEANINGFUL_CONTACT_FLAG": "Y",
+    "INTERACTION_SUBJECT": "Follow-up",
+    "INTERACTION_DETAILS": "Promised to send approved product information. Riley prefers a concise email.",
+    "PRODUCT_NAMES": [
+      "Riverstone Income Fund"
+    ],
+    "REGION_IDENTIFIER": "T1"
+  },
+  {
+    "ADVISOR_ID": "A102",
+    "INTERACTION_ID": "ACT103",
+    "INTERACTION_DATE": "2026-11-09",
+    "INTERACTION_CHANNEL": "Call",
+    "COMMUNICATION_DIRECTION": "Two-way",
+    "MEANINGFUL_CONTACT_FLAG": "Y",
+    "INTERACTION_SUBJECT": "Firm transition",
+    "INTERACTION_DETAILS": "Jordan confirmed joining Maple Advisory and asked to reconnect later this month.",
+    "PRODUCT_NAMES": [],
+    "REGION_IDENTIFIER": "T1"
+  },
+  {
+    "ADVISOR_ID": "A102",
+    "INTERACTION_ID": "ACT104",
+    "INTERACTION_DATE": "2026-11-04",
+    "INTERACTION_CHANNEL": "Email",
+    "COMMUNICATION_DIRECTION": "Outbound",
+    "MEANINGFUL_CONTACT_FLAG": "N",
+    "INTERACTION_SUBJECT": "Webinar invitation",
+    "INTERACTION_DETAILS": "General market webinar invitation sent. No response recorded.",
+    "PRODUCT_NAMES": [],
+    "REGION_IDENTIFIER": "T1"
+  },
+  {
+    "ADVISOR_ID": "A103",
+    "INTERACTION_ID": "ACT105",
+    "INTERACTION_DATE": "2026-11-07",
+    "INTERACTION_CHANNEL": "Call",
+    "COMMUNICATION_DIRECTION": "Two-way",
+    "MEANINGFUL_CONTACT_FLAG": "Y",
+    "INTERACTION_SUBJECT": "Product material",
+    "INTERACTION_DETAILS": "Requested an Oakbridge factsheet.",
+    "PRODUCT_NAMES": [
+      "Oakbridge Equity Fund"
+    ],
+    "REGION_IDENTIFIER": "T2"
+  }
+]
