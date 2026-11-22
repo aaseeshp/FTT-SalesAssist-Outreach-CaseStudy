@@ -21,3 +21,6 @@ FT Problem Statement - AI Capability.pdf
 
 # OS noise
 .DS_Store
+
+# Delivery build output
+delivery-build/

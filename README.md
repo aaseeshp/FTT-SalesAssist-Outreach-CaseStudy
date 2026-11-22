@@ -4,9 +4,13 @@ A capability for the SalesAssist sales workspace. When a salesperson clicks the 
 Advisor, a grounded, ready-to-edit email appears. It comes with the reasons behind it, the approved material to link,
 and the follow-up admin tasks, which run only after confirmation.
 
+**Download everything in one file:** [`FTT_SalesAssist_Outreach_Delivery.zip`](FTT_SalesAssist_Outreach_Delivery.zip)
+(presentation, architecture, conversation and project, with a README on how to run and host it).
+
 | Deliverable | Where |
 |---|---|
 | Presentation (PowerPoint) | [`deck/FT_Outreach_Assist.pptx`](deck/FT_Outreach_Assist.pptx) |
+| Coding-agent conversation | [`CONVERSATION.md`](CONVERSATION.md) |
 | Architecture overview diagram | [`outreach-poc/docs/architecture.svg`](outreach-poc/docs/architecture.svg) · [ARCHITECTURE.md](outreach-poc/docs/ARCHITECTURE.md) |
 | Working proof of concept (FastAPI, light HTML, CrewAI agents, MCP servers) | [`outreach-poc/`](outreach-poc/) (start with its [README](outreach-poc/README.md)) |
 | Decisions, assumptions and limitations | [DECISIONS.md](outreach-poc/docs/DECISIONS.md) · [ASSUMPTIONS_AND_LIMITATIONS.md](outreach-poc/docs/ASSUMPTIONS_AND_LIMITATIONS.md) · [PROMPTS.md](outreach-poc/docs/PROMPTS.md) |
